@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700');
 
+:root {
+  --primary-color: #007bff;
+  --secondary-color: #ffeb3b;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -22,7 +27,7 @@ form {
 .main-header {
   width: 100%;
   height: 3.5rem;
-  background-color: #00695c;
+  background-color: var(--primary-color);
   padding: 0 1.5rem;
   display: flex;
   align-items: center;
@@ -54,7 +59,7 @@ form {
 .main-header__item a:hover,
 .main-header__item a:active,
 .main-header__item a.active {
-  color: #ffeb3b;
+  color: var(--secondary-color);
 }
 
 .mobile-nav {
@@ -98,7 +103,7 @@ form {
 .mobile-nav__item a:active,
 .mobile-nav__item a:hover,
 .mobile-nav__item a.active {
-  background: #00695c;
+  background: var(--primary-color);
   color: white;
   border-radius: 3px;
 }
@@ -119,8 +124,8 @@ form {
 
 #side-menu-toggle:active,
 #side-menu-toggle:hover {
-  color: #ffeb3b;
-  border-color: #ffeb3b;
+  color: var(--secondary-color);
+  border-color: var(--secondary-color);
 }
 
 .backdrop {
@@ -184,8 +189,8 @@ form {
   padding: 0.25rem 1rem;
   text-decoration: none;
   font: inherit;
-  border: 1px solid #00695c;
-  color: #00695c;
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
   background: white;
   border-radius: 3px;
   cursor: pointer;
@@ -193,7 +198,7 @@ form {
 
 .btn:hover,
 .btn:active {
-  background-color: #00695c;
+  background-color: var(--primary-color);
   color: white;
 }
 
