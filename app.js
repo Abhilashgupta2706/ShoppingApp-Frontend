@@ -1,4 +1,5 @@
 console.clear()
+console.log('--------------- Concole Cleared ---------------')
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -9,6 +10,8 @@ const Product = require('./models/product.model');
 const User = require('./models/user.model');
 const CartItem = require('./models/cart-item.model');
 const Cart = require('./models/cart.model');
+const Order = require('./models/order.model');
+const OrderItem = require('./models/order-items.model');
 
 const app = express();
 
@@ -74,6 +77,13 @@ Cart.belongsTo(User);
 
 Cart.belongsToMany(Product, { through: CartItem });
 Product.belongsToMany(Cart, { through: CartItem });
+
+Order.belongsTo(User);
+User.hasMany(Order);
+
+Order.belongsToMany(Product, { through: OrderItem });
+Product.belongsToMany(Order, { through: OrderItem });
+
 
 
 sequelize

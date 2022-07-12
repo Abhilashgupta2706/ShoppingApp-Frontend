@@ -9,7 +9,11 @@
             <main>
                 <% if(products.length> 0) { %>
 
-                    <ul>
+                    <form action="/create-order" method="POST" class="checkout_btn-container">
+                        <button type="submit" class="btn checkout_btn">Order Now!</button>
+                    </form>
+
+                    <ul class="cart_item-container">
                         <% products.forEach(prod=> { %>
                             <li class="cart_item">
                                 <div class="item_detail">
