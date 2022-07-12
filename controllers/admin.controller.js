@@ -11,12 +11,13 @@ exports.getAddProduct = (req, res, next) => {
 
 exports.postAddProduct = (req, res, next) => {
     const { title, price, description, imageUrl } = req.body;
-    Product
-        .create({
+    req.user
+        .createProduct({
             title: title,
             price: price,
             description: description,
-            imageUrl: imageUrl
+            imageUrl: imageUrl,
+
         })
         .then(result => {
             console.log("Data Added to Database")
@@ -34,9 +35,12 @@ exports.getEditProduct = (req, res, next) => {
 
     const prodId = req.params.productId;
 
-    Product
-        .findByPk(prodId)
-        .then(product => {
+    req.user
+        .getProducts({
+            where: { id: prodId }
+        })
+        .then(products => {
+            const product = products[0];
 
             if (!product) {
                 return res.redirect('/')
@@ -53,8 +57,8 @@ exports.getEditProduct = (req, res, next) => {
 };
 
 exports.getProducts = (req, res, next) => {
-    Product
-        .findAll()
+    req.user
+        .getProducts()
         .then(products => {
             res.render('admin/products', {
                 prods: products,
@@ -92,16 +96,19 @@ exports.postEditProduct = (req, res, next) => {
 exports.postDeleteProduct = (req, res, next) => {
     const productId = req.body.productId
 
-    Product
-        .findByPk(productId)
-        .then(product => {
+    req.user
+        .getProducts({
+            where: { id: productId }
+        })
+        .then(products => {
+            const product = products[0]
             if (!product) {
                 return res.redirect('/')
             }
             return product.destroy()
         })
         .then(result => {
-             console.log('PRODUCT DESTROYED!')
+            console.log('PRODUCT DESTROYED!')
             return res.redirect('/admin/products')
         })
         .catch(err => { console.log(err) });

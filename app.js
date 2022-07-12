@@ -5,6 +5,10 @@ const bodyParser = require('body-parser');
 const path = require('path');
 // const expressHbs = require('express-handlebars')
 const sequelize = require('./util/database')
+const Product = require('./models/product.model');
+const User = require('./models/user.model');
+const CartItem = require('./models/cart-item.model');
+const Cart = require('./models/cart.model');
 
 const app = express();
 
@@ -39,7 +43,18 @@ const { pageNotFound } = require('./controllers/404Error.controller');
 
 app
     .use(bodyParser.urlencoded({ extended: false }))
-    .use(express.static(path.join(__dirname, 'public')));
+    .use(express.static(path.join(__dirname, 'public')))
+    .use((req, res, next) => {
+        User
+            .findByPk(1)
+            .then(user => {
+                // console.log("User: ", user.dataValues)
+                req.user = user;
+                next();
+            })
+            .catch(err => { console.log(err) });
+
+    });
 
 app
     .use('/admin', adminRoutes)
@@ -47,10 +62,41 @@ app
 
 app.use(pageNotFound);
 
+
+Product.belongsTo(User, {
+    constraints: true,
+    onDelete: 'CASCADE'
+});
+User.hasMany(Product);
+
+User.hasOne(Cart);
+Cart.belongsTo(User);
+
+Cart.belongsToMany(Product, { through: CartItem });
+Product.belongsToMany(Cart, { through: CartItem });
+
+
 sequelize
+    // .sync({ force: true })
     .sync()
     .then(result => {
+        return User.findByPk(1)
         // console.log(result)
+    })
+    .then(user => {
+        if (!user) {
+            return User.create({
+                name: 'admin',
+                email: 'admi@gmail.com'
+            });
+        };
+        return user;
+    })
+    .then(user => {
+        // console.log(user.dataValues);
+        return user.createCart();
+    })
+    .then(cart => {
         app.listen(3000);
     })
     .catch(err => { console.log(err) });
