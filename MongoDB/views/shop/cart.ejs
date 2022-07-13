@@ -23,7 +23,7 @@
                                     </h4>
                                 </div>
                                 <h3>
-                                    Quantity: <%= prod.cartItem.quantity %>
+                                    Quantity: <%= prod.quantity %>
                                 </h3>
                                 <form action="/cart-delete-item" method="POST">
                                     <input type="hidden" value="<%= prod._id %>" name="productId">

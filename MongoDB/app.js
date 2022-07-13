@@ -46,7 +46,8 @@ app
         User
             .findById('62cd5b2c3086f283963eec77')
             .then(user => {
-                req.user = user;
+                console.log('MiddleWare Console:', user)
+                req.user = new User(user.username, user.email, user.cart, user._id);
                 next()
             })
             .catch(err => { console.log(err) });
