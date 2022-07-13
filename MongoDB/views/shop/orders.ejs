@@ -1,4 +1,6 @@
 <%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/order.css">
+
     </head>
 
     <body>
@@ -11,17 +13,34 @@
 
                     <% } else { %>
 
-                        <ul>
+                        <ul class="order_container">
                             <% orders.forEach(order=> { %>
-                                <li>
-                                    <h1>
-                                        # <%= order._id%>
-                                    </h1>
+                                <li class="order_item">
+                                    <h3 class="order_item__id">
+                                        Order id: #<%= order._id%>
+                                    </h3>
                                     <ul>
                                         <% order.items.forEach(product=> {%>
-                                            <li>
-                                                <%= product.title %> (<%= product.quantity %>)
+                                            <li class="order_item__list">
+                                                <img class="order_item__list_img" src="<%= product.imageUrl %>"
+                                                    alt="<%= product.title %>">
+
+                                                <h4 class="order_item__list_title">
+                                                    <%= product.title %> <span class="each_of"> each of </span>$<%=
+                                                            product.price %>
+                                                </h4>
+
+                                                <span class="order_item__list_quantity">
+                                                    Total Quantity: <%= product.quantity %>
+                                                </span>
+
+                                                <span class="order_item__list_totalprice">
+                                                    Total price: <strong>$<%= product.quantity * product.price %>
+                                                    </strong>
+                                                </span>
+
                                             </li>
+
                                             <% }) %>
                                     </ul>
                                 </li>
