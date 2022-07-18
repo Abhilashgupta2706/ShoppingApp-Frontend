@@ -20,22 +20,22 @@
                                         Order id: #<%= order._id%>
                                     </h3>
                                     <ul>
-                                        <% order.items.forEach(product=> {%>
+                                        <% order.products.forEach(p=> {%>
                                             <li class="order_item__list">
-                                                <img class="order_item__list_img" src="<%= product.imageUrl %>"
-                                                    alt="<%= product.title %>">
+                                                <img class="order_item__list_img" src="<%= p.product.imageUrl %>"
+                                                    alt="<%= p.product.title %>">
 
                                                 <h4 class="order_item__list_title">
-                                                    <%= product.title %> <span class="each_of"> each of </span>$<%=
-                                                            product.price %>
+                                                    <%= p.product.title %> <span class="each_of"> each of </span>$<%=
+                                                            p.product.price %>
                                                 </h4>
 
                                                 <span class="order_item__list_quantity">
-                                                    Total Quantity: <%= product.quantity %>
+                                                    Total Quantity: <%= p.quantity %>
                                                 </span>
 
                                                 <span class="order_item__list_totalprice">
-                                                    Total price: <strong>$<%= product.quantity * product.price %>
+                                                    Total price: <strong>$<%= p.quantity * p.product.price %>
                                                     </strong>
                                                 </span>
 
