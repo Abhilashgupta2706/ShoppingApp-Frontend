@@ -16,6 +16,7 @@ app
 
 
 const adminRoutes = require('./routes/admin.route');
+const authRoutes = require('./routes/auth.route');
 const shopRoutes = require('./routes/shop.route');
 const { pageNotFound } = require('./controllers/404Error.controller');
 
@@ -37,7 +38,8 @@ app
 
 app
     .use('/admin', adminRoutes)
-    .use(shopRoutes);
+    .use(shopRoutes)
+    .use(authRoutes);
 
 app.use(pageNotFound);
 
