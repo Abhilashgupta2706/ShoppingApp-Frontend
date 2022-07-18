@@ -27,6 +27,11 @@ main {
     justify-content: space-between;
 }
 
+.cart_item a{
+    text-decoration: none;
+    color: inherit;
+}
+
 .item_detail {
     display: flex;
     align-items: center;

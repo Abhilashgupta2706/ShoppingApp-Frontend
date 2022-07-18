@@ -16,7 +16,8 @@ exports.postAddProduct = (req, res, next) => {
         title: title,
         price: price,
         description: description,
-        imageUrl: imageUrl
+        imageUrl: imageUrl,
+        userId: req.user
     });
 
     product
@@ -58,7 +59,13 @@ exports.getEditProduct = (req, res, next) => {
 exports.getProducts = (req, res, next) => {
     Product
         .find()
+        // This helps to retrive specific fields from data eg: ONLY title, price && -(minus) sign tells to exclude that field i.e., _id
+        // .select('title price -_id')
+        // Helps to populate the related field for you data
+        // .populate('userId')
         .then(products => {
+            console.clear()
+            console.log(products)
             res.render('admin/products', {
                 prods: products,
                 pageTitle: 'Admin Products',

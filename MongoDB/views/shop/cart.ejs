@@ -16,17 +16,21 @@
                     <ul class="cart_item-container">
                         <% products.forEach(prod=> { %>
                             <li class="cart_item">
-                                <div class="item_detail">
-                                    <img class="item_img" src="<%= prod.imageUrl %>" alt="<%= prod.title %>">
-                                    <h4 class="item_title">
-                                        <%= prod.title %>
-                                    </h4>
-                                </div>
+                                <a href="/products/<%= prod.productId._id %>">
+                                    <div class="item_detail">
+
+                                        <img class="item_img" src="<%= prod.productId.imageUrl %>"
+                                            alt="<%= prod.productId.title %>">
+                                        <h4 class="item_title">
+                                            <%= prod.productId.title %>
+                                        </h4>
+                                    </div>
+                                </a>
                                 <h3>
                                     Quantity: <%= prod.quantity %>
                                 </h3>
                                 <form action="/cart-delete-item" method="POST">
-                                    <input type="hidden" value="<%= prod._id %>" name="productId">
+                                    <input type="hidden" value="<%= prod.productId._id %>" name="productId">
                                     <button class="btn delete-btn" type="submit" cla>Delete</button>
                                 </form>
 
