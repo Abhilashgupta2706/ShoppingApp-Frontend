@@ -24,6 +24,18 @@ form {
   display: inline;
 }
 
+.centered {
+  text-align: center;
+}
+
+.image {
+  height: 20rem;
+}
+
+.image img {
+  height: 100%;
+}
+
 .main-header {
   width: 100%;
   height: 3.5rem;
@@ -53,15 +65,24 @@ form {
   padding: 0;
 }
 
-.main-header__item a {
+.main-header__item a,
+.main-header__item button {
+  font: inherit;
+  background: transparent;
+  border: none;
   text-decoration: none;
   color: white;
+  cursor: pointer;
+  padding: unset;
 }
 
 .main-header__item a:hover,
 .main-header__item a:active,
-.main-header__item a.active {
+.main-header__item a.active,
+.main-header__item button:hover,
+.main-header__item button:active {
   color: var(--secondary-color);
+
 }
 
 .mobile-nav {

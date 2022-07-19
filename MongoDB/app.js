@@ -4,11 +4,18 @@ console.log('--------------- Concole Cleared ---------------');
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const session = require('express-session');
+const MongoDBStore = require('connect-mongodb-session')(session);
+
 const User = require('./models/user.model');
 require('dotenv').config();
 
 const app = express();
+const store = new MongoDBStore({
+    uri: process.env.MONGODB_URI,
+    collection: 'sessions'
+});
 
 app
     .set('view engine', 'ejs')
@@ -23,18 +30,24 @@ const { pageNotFound } = require('./controllers/404Error.controller');
 app
     .use(bodyParser.urlencoded({ extended: false }))
     .use(express.static(path.join(__dirname, 'public')))
+    .use(session({
+        secret: 'This is my secret string for session',
+        resave: false,
+        saveUninitialized: false,
+        store: store
+    }))
     .use((req, res, next) => {
+
+        if (!req.session.user) { return next() };
+        
         User
-            .findById('62d4f3baecabfd3a95762b5a')
+            .findById(req.session.user._id)
             .then(user => {
-                console.log('MiddleWare Console:', user)
-                req.user = user;
-                next()
+                req.user = user
+                next();
             })
             .catch(err => { console.log(err) });
-
-    })
-    ;
+    });
 
 app
     .use('/admin', adminRoutes)
@@ -45,7 +58,7 @@ app.use(pageNotFound);
 
 
 mongoose
-    .connect(`mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@nodejsudemy.hccnuys.mongodb.net/shop?retryWrites=true&w=majority`)
+    .connect(process.env.MONGODB_URI)
     .then(result => {
         console.log('Connected to MongoDB Atlas Cloud Server!');
 
