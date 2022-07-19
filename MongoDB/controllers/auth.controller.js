@@ -25,6 +25,19 @@ exports.postLogin = (req, res, next) => {
         .catch(err => { console.log(err) });
 };
 
+exports.getSignUp = (req, res, next) => {
+    // const isLoggedIn = req.get('Cookie').trim().split('=')[1] === 'true'
+    res.render('auth/signup', {
+        pageTitle: 'SignUp',
+        path: '/signup',
+        isAuthenticated: false
+    });
+};
+
+exports.postSignUp = (req, res, next) => {
+    return
+};
+
 exports.postLogout = (req, res, next) => {
     req.session.destroy(err => {
         console.clear();
