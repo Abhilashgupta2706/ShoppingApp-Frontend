@@ -116,16 +116,22 @@ form {
   padding: 0;
 }
 
-.mobile-nav__item a {
+.mobile-nav__item a,
+.mobile-nav__item button {
   text-decoration: none;
   color: black;
   font-size: 1.5rem;
   padding: 0.5rem 2rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
 }
 
 .mobile-nav__item a:active,
 .mobile-nav__item a:hover,
-.mobile-nav__item a.active {
+.mobile-nav__item a.active,
+.mobile-nav__item button:hover,
+.mobile-nav__item button:active {
   background: var(--primary-color);
   color: white;
   border-radius: 3px;
@@ -246,6 +252,12 @@ form {
   }
 
   #side-menu-toggle {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-header__nav {
     display: none;
   }
 }
