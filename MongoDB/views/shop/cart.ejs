@@ -10,6 +10,7 @@
                 <% if(products.length> 0) { %>
 
                     <form action="/create-order" method="POST" class="checkout_btn-container">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                         <button type="submit" class="btn checkout_btn">Order Now!</button>
                     </form>
 
@@ -30,6 +31,7 @@
                                     Quantity: <%= prod.quantity %>
                                 </h3>
                                 <form action="/cart-delete-item" method="POST">
+                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                                     <input type="hidden" value="<%= prod.productId._id %>" name="productId">
                                     <button class="btn delete-btn" type="submit" cla>Delete</button>
                                 </form>
