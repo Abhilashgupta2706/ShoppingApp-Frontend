@@ -1,6 +1,26 @@
+:root {
+    --primary-color: #007bff;
+    --secondary-color: #ffeb3b;
+}
+
 .login-form, .signup-form {
     width: 20rem;
     max-width: 90%;
     margin: auto;
     display: block;
+}
+
+.action-btns {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.action-btns a {
+    text-decoration: none;
+    color: var(--primary-color);
+}
+
+.action-btns a:hover {
+    text-decoration: underline;
 }
