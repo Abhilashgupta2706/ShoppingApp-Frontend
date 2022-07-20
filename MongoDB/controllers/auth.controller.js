@@ -1,5 +1,21 @@
 const User = require('../models/user.model');
 const bcrypt = require('bcryptjs');
+var nodemailer = require('nodemailer');
+
+const { SenderEmailID, SenderAppPasssword } = require('./nodeMailerConfig');
+
+const transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    auth: {
+        user: SenderEmailID,
+        pass: SenderAppPasssword,
+    },
+    tls: {
+        rejectUnauthorized: false
+    }
+});
 
 exports.getLogin = (req, res, next) => {
     // const isLoggedIn = req.get('Cookie').trim().split('=')[1] === 'true'
@@ -81,7 +97,33 @@ exports.postSignUp = (req, res, next) => {
                 })
                 .then(result => {
                     res.redirect('/login')
-                });
+
+                    return transporter
+                        .sendMail({
+                            from: `Malicious Person 🧑🏻‍💻 <${SenderEmailID}>`,
+                            to: email,
+                            subject: "Mail from Shopping App NodeJS ✔",
+                            text: `You have successfully registered on our Shopping App
+                            Your Credentials are:
+                            Email: ${email}
+                            Password: ${password}`,
+                            html: `<h1>Thank you for registering yourself on our application</h1>
+                            <h3>
+                            You have successfully registered on our 
+                            <a href="https://github.com/Abhilashgupta2706/ShoppingApp-NodeJS" target="_blank">Shopping
+                            App</a>
+                            </h3>
+                            <p>Your Credentials are:</p>
+                            <p>Email: <strong>${email}</strong></p>
+                            <p>Password: <strong>${password}</strong></p>`,
+                        })
+                        .then(result => {
+                            console.log('Email Successfully Sended')
+                        })
+                        .catch(err => { console.log((err)) });
+
+                })
+                .catch(err => { console.log((err)) });
 
         })
         .catch(err => { console.log((err)) });
