@@ -39,7 +39,7 @@ app
     .use((req, res, next) => {
 
         if (!req.session.user) { return next() };
-        
+
         User
             .findById(req.session.user._id)
             .then(user => {
@@ -61,23 +61,6 @@ mongoose
     .connect(process.env.MONGODB_URI)
     .then(result => {
         console.log('Connected to MongoDB Atlas Cloud Server!');
-
-        User
-            .findOne()
-            .then(user => {
-                if (!user) {
-                    const user = new User({
-                        username: 'Admin',
-                        email: 'admin@role.in',
-                        cart: {
-                            items: []
-                        }
-                    });
-
-                    user.save()
-                }
-            });
-
         app.listen(3000)
     })
     .catch(err => {
