@@ -59,7 +59,8 @@ exports.getEditProduct = (req, res, next) => {
 
 exports.getProducts = (req, res, next) => {
     Product
-        .find()
+        // .find()
+        .find({ userId: req.user._id })
         // This helps to retrive specific fields from data eg: ONLY title, price && -(minus) sign tells to exclude that field i.e., _id
         // .select('title price -_id')
         // Helps to populate the related field for you data
@@ -87,6 +88,12 @@ exports.postEditProduct = (req, res, next) => {
     Product
         .findById(productId)
         .then(product => {
+
+            if (product.userId.toString() !== req.user._id.toString()) {
+                req.flash('error', "You don't have permission to edit this product.");
+                return res.redirect('/');
+            }
+
             product.title = updatedTitle
             product.price = updatedPrice
             product.description = updatedDescription
@@ -94,10 +101,10 @@ exports.postEditProduct = (req, res, next) => {
 
             return product
                 .save()
-        })
-        .then(result => {
-            console.log("Product Updated")
-            return res.redirect('/admin/products');
+                .then(result => {
+                    console.log("Product Updated")
+                    return res.redirect('/admin/products');
+                });
         })
         .catch(err => { console.log(err) });
 };
@@ -106,8 +113,8 @@ exports.postDeleteProduct = (req, res, next) => {
     const prodId = req.body.productId;
 
     Product
-        .findByIdAndRemove(prodId)
-        .then(() => {
+        .deleteOne({ _id: prodId, userId: req.user._id })
+        .then(result => {
             console.log('PRODUCT DESTROYED!')
             return res.redirect('/admin/products')
         })

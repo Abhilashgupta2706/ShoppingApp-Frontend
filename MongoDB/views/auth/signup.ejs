@@ -29,11 +29,14 @@
                                 <input type="password" name="confirmPassword" id="confirmPassword">
                             </div>
 
-                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                            <button class="btn" type="submit">
-                                Sign Up
-                            </button>
+                            <div class="action-btns">
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                <button class="btn" type="submit">
+                                    Sign Up
+                                </button>
 
+                                <a href="/login">Existing user?</a>
+                            </div>
                         </form>
             </main>
             <%- include('../includes/end.ejs') %>

@@ -9,7 +9,8 @@ exports.getIndex = (req, res, next) => {
             res.render('shop/index', {
                 prods: products,
                 pageTitle: 'My Shop',
-                path: '/'
+                path: '/',
+                errorMessage: req.flash('error')
             })
         })
         .catch(err => { console.log(err) });
