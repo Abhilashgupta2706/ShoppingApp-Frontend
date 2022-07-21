@@ -21,3 +21,31 @@
 .form-control textarea:focus {
     outline-color: #00695c;
 }
+
+.form-control input.invalidInput,
+.form-control textarea.invalidInput {
+    border-color: red;
+    animation: invalidInput .1s 2;
+}
+
+@keyframes invalidInput {
+    0% {
+        transform: translateX(0px);
+    }
+
+    25% {
+        transform: translateX(4px);
+    }
+
+    50% {
+        transform: translateX(0px);
+    }
+
+    75% {
+        transform: translateX(-4px);
+    }
+
+    100% {
+        transform: translateX(0px);
+    }
+}
