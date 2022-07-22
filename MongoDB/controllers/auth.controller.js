@@ -88,7 +88,11 @@ exports.postLogin = (req, res, next) => {
                     res.redirect('/login');
                 });
         })
-        .catch(err => { console.log(err) });
+        .catch(err => {
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(error);
+        });
 };
 
 exports.getSignUp = (req, res, next) => {
@@ -168,7 +172,11 @@ exports.postSignUp = (req, res, next) => {
                 .catch(err => { console.log((err)) });
 
         })
-        .catch(err => { console.log((err)) });
+        .catch(err => {
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(error);
+        });
 };
 
 exports.postLogout = (req, res, next) => {
@@ -240,7 +248,11 @@ exports.postReset = (req, res, next) => {
                         <p style='color:red;'>Note: This link is only valid for 1 hour</p>`
                     });
             })
-            .catch(err => { console.log((err)) });
+            .catch(err => {
+                const error = new Error(err);
+                error.httpStatusCode = 500;
+                return next(error);
+            });
     });
 };
 
@@ -262,7 +274,11 @@ exports.getNewPassword = (req, res, next) => {
                 passwordToken: token
             });
         })
-        .catch(err => { console.log((err)) });
+        .catch(err => {
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(error);
+        });
 };
 
 exports.postNewPassword = (req, res, next) => {
@@ -287,7 +303,11 @@ exports.postNewPassword = (req, res, next) => {
                         passwordToken: passwordToken
                     });
             })
-            .catch(err => { console.log((err)) });
+            .catch(err => {
+                const error = new Error(err);
+                error.httpStatusCode = 500;
+                return next(error);
+            });
     }
 
     let userToReset;
@@ -338,5 +358,9 @@ exports.postNewPassword = (req, res, next) => {
                     <p>Password: <strong>${newPassword}</strong></p>`,
                 })
         })
-        .catch(err => { console.log((err)) });
+        .catch(err => {
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(error);
+        });
 };

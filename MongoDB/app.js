@@ -28,6 +28,7 @@ app
 const adminRoutes = require('./routes/admin.route');
 const authRoutes = require('./routes/auth.route');
 const shopRoutes = require('./routes/shop.route');
+const errorController = require('./controllers/error.controller');
 const { pageNotFound } = require('./controllers/404Error.controller');
 
 app
@@ -42,31 +43,45 @@ app
     .use(csrfProtection)
     .use(flash())
     .use((req, res, next) => {
+        res.locals.isAuthenticated = req.session.isLoggedIn;
+        res.locals.csrfToken = req.csrfToken();
+        next();
+    })
+    .use((req, res, next) => {
 
         if (!req.session.user) { return next() };
 
         User
             .findById(req.session.user._id)
             .then(user => {
+                if (!user) {
+                    return next();
+                };
+
                 req.user = user
                 next();
             })
-            .catch(err => { console.log(err) });
+            .catch(err => { next(new Error(err)) });
     });
-
-app.use((req, res, next) => {
-    res.locals.isAuthenticated = req.session.isLoggedIn;
-    res.locals.csrfToken = req.csrfToken();
-    next();
-});
 
 app
     .use('/admin', adminRoutes)
     .use(shopRoutes)
     .use(authRoutes);
 
+app.get('/500', errorController.get500);
 app.use(pageNotFound);
 
+app.use((err, req, res, next) => {
+    // res.redirect('/500')
+    res
+        .status(500)
+        .render('500-Error', {
+            pageTitle: 'Internal Server Error - 500',
+            path: '/500',
+            isAuthenticated: req.session.isLoggedIn
+        });
+});
 
 mongoose
     .connect(process.env.MONGODB_URI)
