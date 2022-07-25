@@ -16,9 +16,12 @@
                         <ul class="order_container">
                             <% orders.forEach(order=> { %>
                                 <li class="order_item">
-                                    <h3 class="order_item__id">
-                                        Order id: #<%= order._id%>
-                                    </h3>
+                                    <div class="head">
+                                        <h3 class="order_item__id">
+                                            Order id: #<%= order._id%>
+                                        </h3>
+                                        <a href="/orders/<%= order._id%>">Invoice</a>
+                                    </div>
                                     <ul>
                                         <% order.products.forEach(p=> {%>
                                             <li class="order_item__list">
