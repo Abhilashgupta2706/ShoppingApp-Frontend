@@ -16,16 +16,6 @@ router.post('/add-product', [
         .withMessage('Title must be Alphanumeric with length minimum 10 Characters.')
         .trim(),
 
-    body('imageUrl')
-        .isURL()
-        .withMessage('Please enter a valid URL for the image.')
-        .custom((value, { req }) => {
-            if (value == '') {
-                throw new Error('URL for product image is required.')
-            }
-            return true;
-        }),
-
     body('price')
         .isFloat()
         .withMessage('Must enter valid price.')
@@ -51,16 +41,6 @@ router.post('/edit-product', [
         .isLength({ min: 10 })
         .withMessage('Title must be Alphanumeric with length minimum 10 Characters.')
         .trim(),
-
-    body('imageUrl')
-        .isURL()
-        .withMessage('Please enter a valid URL for the image.')
-        .custom((value, { req }) => {
-            if (value == '') {
-                throw new Error('URL for product image is required.')
-            }
-            return true;
-        }),
 
     body('price')
         .isFloat()

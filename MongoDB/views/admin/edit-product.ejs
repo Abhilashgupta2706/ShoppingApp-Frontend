@@ -17,7 +17,7 @@
 
                         <form class="product-form"
                             action="/admin/<% if(editing) {%>edit-product<%} else {%>add-product<%} %>" method="POST"
-                            novalidate>
+                            novalidate enctype="multipart/form-data">
                             <div class="form-control">
                                 <label for="title">Title</label>
                                 <input
@@ -26,35 +26,38 @@
                                     value="<% if(editing || hasError) {%><%=product.title%><%} %>">
                             </div>
                             <div class="form-control">
+                                <label for="image">Image</label>
+                                <input class="<%= validationErrors.find(e => e.param === 'image') ?  'invalidInput' :null %>" type="file" name="image" id="image" </div>
+                                <!-- <div class="form-control">
                                 <label for="imageUrl">Image URL</label>
                                 <input
                                     class="<%= validationErrors.find(e => e.param === 'imageUrl') ?  'invalidInput' :null %>"
                                     type="text" name="imageUrl" id="imageUrl"
                                     value="<% if(editing || hasError) {%><%=product.imageUrl%><%} %>">
-                            </div>
-                            <div class="form-control">
-                                <label for="price">Price</label>
-                                <input
-                                    class="<%= validationErrors.find(e => e.param === 'price') ?  'invalidInput' :null %>"
-                                    type="number" name="price" id="price" step="0.01"
-                                    value="<% if(editing || hasError) {%><%=product.price%><%} %>">
-                            </div>
-                            <div class="form-control">
-                                <label for="description">Description</label>
-                                <textarea
-                                    class="<%= validationErrors.find(e => e.param === 'description') ?  'invalidInput' :null %>"
-                                    name="description" id="description"
-                                    rows="5"><% if(editing || hasError) {%><%=product.description%><%} %></textarea>
-                            </div>
+                            </div> -->
+                                <div class="form-control">
+                                    <label for="price">Price</label>
+                                    <input
+                                        class="<%= validationErrors.find(e => e.param === 'price') ?  'invalidInput' :null %>"
+                                        type="number" name="price" id="price" step="0.01"
+                                        value="<% if(editing || hasError) {%><%=product.price%><%} %>">
+                                </div>
+                                <div class="form-control">
+                                    <label for="description">Description</label>
+                                    <textarea
+                                        class="<%= validationErrors.find(e => e.param === 'description') ?  'invalidInput' :null %>"
+                                        name="description" id="description"
+                                        rows="5"><% if(editing || hasError) {%><%=product.description%><%} %></textarea>
+                                </div>
 
-                            <% if(editing) { %>
-                                <input type="hidden" value="<%= product._id %>" name="productId">
-                                <% } %>
+                                <% if(editing) { %>
+                                    <input type="hidden" value="<%= product._id %>" name="productId">
+                                    <% } %>
 
-                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                                    <button class="btn" type="submit">
-                                        <% if(editing) {%> Update Product <%} else {%> Add Product <%} %>
-                                    </button>
+                                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                        <button class="btn" type="submit">
+                                            <% if(editing) {%> Update Product <%} else {%> Add Product <%} %>
+                                        </button>
                         </form>
             </main>
             <%- include('../includes/end.ejs') %>
