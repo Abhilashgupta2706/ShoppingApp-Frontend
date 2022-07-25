@@ -197,7 +197,7 @@ exports.postEditProduct = (req, res, next) => {
             product.description = updatedDescription
 
             if (image) {
-                product.imageUrl = image.path;
+                product.imageUrl = `/${image.path}`;
             }
 
             return product

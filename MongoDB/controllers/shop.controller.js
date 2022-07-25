@@ -71,6 +71,8 @@ exports.getCart = (req, res, next) => {
                 path: '/cart',
                 products: products
             });
+            console.log('products')
+            console.log(products)
         })
         .catch(err => {
             const error = new Error(err);
@@ -189,27 +191,35 @@ exports.getInvoice = (req, res, next) => {
 
             pdfDoc.pipe(fs.createWriteStream(invoicePath));
             pdfDoc.pipe(res);
-            pdfDoc.text('Hello WOrld!');    
+
+            pdfDoc
+                .fontSize(26)
+                .text('Invoice!', {
+                    underline: true
+                });
+
+            pdfDoc
+            .fontSize(14)
+            .text('-----------------------------------');
+
+            let totalPrice = 0;
+            order.products.forEach(prod => {
+                pdfDoc
+                    .fontSize(14)
+                    .text(`Product Name: ${prod.product.title}
+Quantity: ${prod.quantity}
+Price per product: $${prod.product.price}
+Final Price: ${prod.quantity * prod.product.price}
+  `)
+
+                totalPrice += prod.quantity * prod.product.price
+            });
+
+            pdfDoc.text('-----------------------------------');
+            pdfDoc
+                .fontSize(20)
+                .text(`Total Price: $${totalPrice}`);
             pdfDoc.end();
-
-            // fs.readFile(invoicePath, (err, data) => {
-            //     if (err) {
-            //         return next(err)
-            //     };
-
-            //     res
-            //         .setHeader('Content-Type', 'application/pdf')
-            //         .setHeader('Content-Disposition', `inline; filename=${invoiceName}`)
-            //         .send(data);
-            // });
-
-            // -----------------Static File Download ----------------- 
-            // const file = fs.createReadStream(invoicePath);
-            // res
-            //     .setHeader('Content-Type', 'application/pdf')
-            //     .setHeader('Content-Disposition', `inline; filename=${invoiceName}`);
-
-            // file.pipe(res);
 
         })
         .catch(err => {
