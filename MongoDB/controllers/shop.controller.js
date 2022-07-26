@@ -193,32 +193,30 @@ exports.getInvoice = (req, res, next) => {
             pdfDoc.pipe(res);
 
             pdfDoc
-                .fontSize(26)
-                .text('Invoice!', {
+                .fontSize(22)
+                .text(`Invoice for OrderId: ${orderId}`, {
                     underline: true
                 });
 
-            pdfDoc
-            .fontSize(14)
-            .text('-----------------------------------');
+            pdfDoc.fontSize(14);
 
             let totalPrice = 0;
-            order.products.forEach(prod => {
+            order.products.forEach((prod, index) => {
                 pdfDoc
                     .fontSize(14)
-                    .text(`Product Name: ${prod.product.title}
-Quantity: ${prod.quantity}
-Price per product: $${prod.product.price}
-Final Price: ${prod.quantity * prod.product.price}
-  `)
+                    .text(`
+${index + 1}. Product Name: ${prod.product.title}
+    Quantity: ${prod.quantity}
+    Price per product: $${prod.product.price}
+    Final Price: ${prod.quantity * prod.product.price}`)
 
                 totalPrice += prod.quantity * prod.product.price
             });
 
-            pdfDoc.text('-----------------------------------');
             pdfDoc
                 .fontSize(20)
-                .text(`Total Price: $${totalPrice}`);
+                .text(`\nTotal Price: $${totalPrice}`);
+
             pdfDoc.end();
 
         })
