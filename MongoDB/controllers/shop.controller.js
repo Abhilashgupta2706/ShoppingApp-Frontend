@@ -1,6 +1,6 @@
 // const Cart = require('../models/cart.model')
 const Order = require('../models/order.model');
-const Product = require('../models/product.model')
+const Product = require('../models/product.model');
 const fs = require('fs');
 const path = require('path');
 const PDFDocument = require('pdfkit');
@@ -21,7 +21,7 @@ exports.getIndex = (req, res, next) => {
             error.httpStatusCode = 500;
             return next(error);
         });
-}
+};
 
 exports.getProducts = (req, res, next) => {
     Product
@@ -38,7 +38,7 @@ exports.getProducts = (req, res, next) => {
             error.httpStatusCode = 500;
             return next(error);
         });
-}
+};
 
 exports.getProduct = (req, res, next) => {
     const prodId = req.params.productId;
@@ -58,7 +58,7 @@ exports.getProduct = (req, res, next) => {
             error.httpStatusCode = 500;
             return next(error);
         });
-}
+};
 
 exports.getCart = (req, res, next) => {
     req.user
@@ -113,8 +113,7 @@ exports.postCartDeleteItem = (req, res, next) => {
             error.httpStatusCode = 500;
             return next(error);
         });
-
-}
+};
 
 exports.postOrder = (req, res, next) => {
     req.user
@@ -164,7 +163,7 @@ exports.getOrders = (req, res, next) => {
             error.httpStatusCode = 500;
             return next(error);
         });
-}
+};
 
 exports.getInvoice = (req, res, next) => {
     const { orderId } = req.params;
@@ -225,8 +224,4 @@ ${index + 1}. Product Name: ${prod.product.title}
             error.httpStatusCode = 500;
             return next(error);
         });
-
-
-
-
 };

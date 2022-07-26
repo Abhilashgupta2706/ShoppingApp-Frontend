@@ -1,10 +1,10 @@
-const express = require('express')
+const express = require('express');
 const { body } = require('express-validator/check');
-const adminController = require('../controllers/admin.controller')
+const adminController = require('../controllers/admin.controller');
 
-const isAuth = require('../middleware/isAuth.middleware')
+const isAuth = require('../middleware/isAuth.middleware');
 
-const router = express.Router()
+const router = express.Router();
 
 router.get('/products', isAuth, adminController.getProducts);
 
@@ -32,7 +32,7 @@ router.post('/add-product', [
         .isLength({ min: 10, max: 200 })
         .withMessage('Description must be between 10 to 200 Characters.')
         .trim(),
-], isAuth, adminController.postAddProduct)
+], isAuth, adminController.postAddProduct);
 
 router.get('/edit-product/:productId', isAuth, adminController.getEditProduct)
 router.post('/edit-product', [
@@ -58,9 +58,9 @@ router.post('/edit-product', [
         .isLength({ min: 10, max: 200 })
         .withMessage('Description must be between 10 to 200 Characters.')
         .trim(),
-], isAuth, adminController.postEditProduct)
+], isAuth, adminController.postEditProduct);
 
-router.post('/delete-product', isAuth, adminController.postDeleteProduct)
+router.post('/delete-product', isAuth, adminController.postDeleteProduct);
 
 
 module.exports = router;

@@ -2,7 +2,7 @@ const User = require('../models/user.model');
 const bcrypt = require('bcryptjs');
 var nodemailer = require('nodemailer');
 const crypto = require('crypto');
-const { validationResult } = require('express-validator/check')
+const { validationResult } = require('express-validator/check');
 
 const { SenderEmailID, SenderAppPasssword } = require('./nodeMailerConfig');
 
@@ -52,7 +52,7 @@ exports.postLogin = (req, res, next) => {
                 },
                 validationErrors: errors.array()
             });
-    }
+    };
 
     User
         .findOne({ email: email })
@@ -129,7 +129,7 @@ exports.postSignUp = (req, res, next) => {
                 },
                 validationErrors: errors.array()
             });
-    }
+    };
 
     bcrypt
         .hash(password, 12)
@@ -215,8 +215,7 @@ exports.postReset = (req, res, next) => {
                     email: email,
                 }
             });
-    }
-
+    };
 
     crypto.randomBytes(32, (err, buffer) => {
         if (err) {
@@ -308,7 +307,7 @@ exports.postNewPassword = (req, res, next) => {
                 error.httpStatusCode = 500;
                 return next(error);
             });
-    }
+    };
 
     let userToReset;
 

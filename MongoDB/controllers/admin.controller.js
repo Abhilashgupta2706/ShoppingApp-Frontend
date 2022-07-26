@@ -1,5 +1,5 @@
-const Product = require('../models/product.model')
-const { validationResult } = require('express-validator/check')
+const Product = require('../models/product.model');
+const { validationResult } = require('express-validator/check');
 var mongoose = require('mongoose');
 const { deleteFile } = require('../util/file');
 
@@ -34,7 +34,7 @@ exports.postAddProduct = (req, res, next) => {
                 errorMessage: 'Attached file is not an image.',
                 validationErrors: [{ param: 'image' }]
             })
-    }
+    };
 
     const errors = validationResult(req);
 
@@ -55,7 +55,7 @@ exports.postAddProduct = (req, res, next) => {
                 errorMessage: errors.array()[0].msg,
                 validationErrors: errors.array()
             })
-    }
+    };
 
     const imageUrl = image.path;
 
@@ -182,7 +182,7 @@ exports.postEditProduct = (req, res, next) => {
                 errorMessage: errors.array()[0].msg,
                 validationErrors: errors.array()
             });
-    }
+    };
 
     Product
         .findById(mongoose.Types.ObjectId(productId))
@@ -238,5 +238,4 @@ exports.postDeleteProduct = (req, res, next) => {
             error.httpStatusCode = 500;
             return next(error);
         });
-
 };
