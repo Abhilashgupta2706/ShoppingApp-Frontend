@@ -5,18 +5,40 @@ const fs = require('fs');
 const path = require('path');
 const PDFDocument = require('pdfkit');
 
+const ITEMS_PER_PAGE = 3;
+
 exports.getIndex = (req, res, next) => {
+
+    const pageNum = +req.query.page || 1;
+    let totalItems;
+
     Product
         .find()
+        .countDocuments()
+        .then(numOfProducts => {
+            totalItems = numOfProducts;
+
+            return Product
+                .find()
+                .skip((pageNum - 1) * ITEMS_PER_PAGE)
+                .limit(ITEMS_PER_PAGE)
+        })
         .then(products => {
             res.render('shop/index', {
                 prods: products,
                 pageTitle: 'My Shop',
                 path: '/',
-                errorMessage: req.flash('error')
+                errorMessage: req.flash('error'),
+                currentPage: pageNum,
+                hasNextPage: ITEMS_PER_PAGE * pageNum < totalItems,
+                hasPreviousPage: pageNum > 1,
+                nextPage: pageNum + 1,
+                previousPage: pageNum - 1,
+                lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE)
             })
         })
         .catch(err => {
+            console.log(err)
             const error = new Error(err);
             error.httpStatusCode = 500;
             return next(error);
@@ -24,13 +46,32 @@ exports.getIndex = (req, res, next) => {
 };
 
 exports.getProducts = (req, res, next) => {
+    const pageNum = +req.query.page || 1;
+    let totalItems;
+
     Product
         .find()
+        .countDocuments()
+        .then(numOfProducts => {
+            totalItems = numOfProducts;
+
+            return Product
+                .find()
+                .skip((pageNum - 1) * ITEMS_PER_PAGE)
+                .limit(ITEMS_PER_PAGE)
+        })
         .then(products => {
             res.render('shop/product-list', {
                 prods: products,
                 pageTitle: 'All Products',
-                path: '/products'
+                path: '/products',
+                errorMessage: req.flash('error'),
+                currentPage: pageNum,
+                hasNextPage: ITEMS_PER_PAGE * pageNum < totalItems,
+                hasPreviousPage: pageNum > 1,
+                nextPage: pageNum + 1,
+                previousPage: pageNum - 1,
+                lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE)
             })
         })
         .catch(err => {
