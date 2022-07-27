@@ -4,7 +4,7 @@ var nodemailer = require('nodemailer');
 const crypto = require('crypto');
 const { validationResult } = require('express-validator/check');
 
-const { SenderEmailID, SenderAppPasssword } = require('./nodeMailerConfig');
+const { SenderEmailID, SenderAppPasssword } = require('./privateKeys');
 
 const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",

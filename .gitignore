@@ -55,5 +55,5 @@ firebase.json
 
 
 .env
-nodeMailerConfig.js
+privateKeys.js
 .vscode

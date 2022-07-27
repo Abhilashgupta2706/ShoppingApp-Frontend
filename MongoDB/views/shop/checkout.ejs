@@ -1,0 +1,56 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/cart.css">
+
+    </head>
+
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+
+            <main>
+
+                <ul class="cart_item-container">
+                    <% products.forEach(prod=> { %>
+                        <li class="cart_item">
+                            <a href="/products/<%= prod.productId._id %>">
+                                <div class="item_detail">
+
+                                    <img class="item_img" src="/<%= prod.productId.imageUrl %>"
+                                        alt="<%= prod.productId.title %>">
+                                    <h4 class="item_title">
+                                        <%= prod.productId.title %>
+                                    </h4>
+                                </div>
+                            </a>
+                            <h3>
+                                Quantity: <%= prod.quantity %>
+                            </h3>
+
+                        </li>
+                        <%}) %>
+                </ul>
+
+                <div class="centered">
+                    <h2>
+                        Total Amount: $<%= totalSum %>
+                    </h2>
+                </div>
+
+                <div class="centered">
+                    <button id="order-btn" class="btn"> Order </button>
+                    <script src="https://js.stripe.com/v3/"></script>
+                    <script>
+                        var stripe = Stripe('pk_test_51LQ3iQSAo5qaZHeW7AxmuMnxwxYbjo6xm6cXGmeFTrKQ2ejnEb6bew2dSYSDXD67tf3yjU2YaZs7gtof5ibbVrD100mNHkoY9q');
+                        var orderBtn = document.getElementById('order-btn');
+
+                        orderBtn.addEventListener('click', function () {
+                            stripe.redirectToCheckout({
+                                sessionId: '<%= sessionId %>'
+                            });
+                        });
+                    </script>
+                </div>
+
+
+            </main>
+
+            <%- include('../includes/end.ejs') %>
