@@ -56,3 +56,4 @@ firebase.json
 
 .env
 nodeMailerConfig.js
+.vscode
