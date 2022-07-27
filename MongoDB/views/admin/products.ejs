@@ -10,7 +10,7 @@
                     <div class="container">
                         <% for (let product of prods) { %>
 
-                            <div class="card">
+                            <article class="card">
                                 <img src="/<%= product.imageUrl %>" alt="<%= product.title %>">
                                 <div class="card-body">
                                     <div class="row">
@@ -28,14 +28,14 @@
                                     </p>
                                     <div class="btn-group">
                                         <a href="/admin/edit-product/<%=product._id%>?edit=true" class="btn">Edit</a>
-                                        <form action="/admin/delete-product" method="POST">
+
                                             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                                             <input type="hidden" value="<%= product._id %>" name="productId">
-                                            <button class="btn delete-btn" type="submit">Delete</button>
-                                        </form>
+                                            <button class="btn delete-btn" type="button"  onclick="deleteProduct(this)">Delete</button>
+
                                     </div>
                                 </div>
-                            </div>
+                            </article>
 
                             <% } %>
                     </div>
@@ -43,4 +43,7 @@
                         <h1>No Products Found!</h1>
                         <% } %>
             </main>
+
+
+            <script src="/js/admin.js"> </script>
             <%- include('../includes/end.ejs') %>
