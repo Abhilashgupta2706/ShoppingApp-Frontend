@@ -1,7 +1,6 @@
 # ShoppingApp-Forntend
 
 This repository contains my NodeJS practice codes Only Forntend. <br />
-<!-- Here is the [Backend Code](https://github.com/Abhilashgupta2706/ShoppingApp-Backend) <br /> -->
 
 ### About this project
 
