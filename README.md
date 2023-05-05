@@ -1,10 +1,10 @@
-# ShoppingApp-Forntend
+# ShoppingApp-Frontend
 
-This repository contains my NodeJS practice codes Only Forntend. <br />
+This repository contains my NodeJS practice codes. <br />
 
 ### About this project
 
-I made this project when I started learning NodeJS. I have also used Database like SQL & NoSQL. This is a project from [Udemny Course](https://www.udemy.com/course/nodejs-the-complete-guide/) <br />
+I made this project when I started learning Node.js. I have also used Database like SQL & NoSQL. This is a project from [Udemny Course](https://www.udemy.com/course/nodejs-the-complete-guide/) <br />
 React App developed later in this course is in [this repository](https://github.com/Abhilashgupta2706/REST-API-Node.js.git).
 
 ### Setup & Installtion
